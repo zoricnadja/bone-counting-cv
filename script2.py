@@ -55,11 +55,11 @@ def preprocess_video(video_name, results):
         
         # Apply some morphological operations to clean up the mask
         kernel = np.ones((3,3), np.uint8)
-        mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
-        mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
+        # mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
+        # mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
         
         # Apply Gaussian blur to reduce noise
-        mask = cv2.GaussianBlur(mask, (5, 5), 0)
+        mask = cv2.medianBlur(mask, 5)
         circles = cv2.HoughCircles(
             mask, 
             cv2.HOUGH_GRADIENT, 
@@ -95,8 +95,8 @@ def preprocess_video(video_name, results):
                 is_circle_active = False
         cv2.putText(display, f"Count: {sum_of_bones}", (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
         cv2.putText(display, event_text if circles is not None else "No circle", (20, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-        cv2.imshow("Mask", mask)
-        cv2.imshow("Frame", display)
+        # cv2.imshow("Mask", mask)
+        # cv2.imshow("Frame", display)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
     # print(bones)
