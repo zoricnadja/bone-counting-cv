@@ -91,7 +91,7 @@ def preprocess_video(video_name, results):
                 
         else:
             num_frames_without_circle += 1
-            if num_frames_without_circle >= 3:
+            if num_frames_without_circle >= 5:
                 is_circle_active = False
         cv2.putText(display, f"Count: {sum_of_bones}", (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
         cv2.putText(display, event_text if circles is not None else "No circle", (20, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
